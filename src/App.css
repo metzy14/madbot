@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #1e1b4b; /* Matches indigo-950 */
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-container {
+  background: #1f2937; /* Matches gray-800 */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-container h1 {
+  @apply text-4xl font-bold text-purple-500 mb-4;
+}
+
+.login-container p {
+  @apply text-lg text-gray-200 mb-6;
+}
+
+.buttons {
+  @apply flex flex-col gap-4;
+}
+
+.btn {
+  @apply bg-purple-500 text-gray-800 font-bold py-3 px-6 rounded;
+}
+
+.btn:hover {
+  @apply bg-purple-400;
+}
+
+.dashboard {
+  @apply max-w-4xl mx-auto;
+}
+
+.logout-btn {
+  @apply bg-red-500 text-white font-bold py-2 px-4 rounded mb-5;
+}
+
+.logout-btn:hover {
+  @apply bg-red-400;
+}
+
+.stats, .commands, .chat-log {
+  @apply bg-gray-800 p-4 rounded-lg mb-5;
+}
+
+.stats h2, .commands h2, .chat-log h2 {
+  @apply text-purple-500;
+}
+
+form {
+  @apply flex flex-col gap-3 mb-5;
+}
+
+input {
+  @apply p-2 rounded bg-gray-700 text-white border-none;
+}
+
+ul {
+  @apply list-none p-0;
+}
+
+li {
+  @apply my-2;
+}
