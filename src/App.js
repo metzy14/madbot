@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Connections from './Connections';
-import { AUTH_ORIGIN, http } from './api';
+import { AUTH_ORIGIN, clearSession, http } from './api';
 import './App.css';
 
 const Home = () => {
@@ -79,7 +79,14 @@ const DashboardGate = () => {
     <div className="dashboard">
       <h1>Welcome, {user?.username}</h1>
       <p>
-        <a href={`${AUTH_ORIGIN}/logout`}>Log out</a>
+        <a
+          href={`${AUTH_ORIGIN}/logout`}
+          onClick={() => {
+            clearSession();
+          }}
+        >
+          Log out
+        </a>
       </p>
       <Dashboard />
     </div>
