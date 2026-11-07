@@ -1,222 +1,290 @@
-.App {
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
-  color: #FFFFFF;
+
+:root {
+  --bg: #070907;
+  --ink: #f4f7f2;
+  --muted: #9aa898;
+  --line: rgba(83, 252, 24, 0.22);
+  --green: #53fc18;
+  --green-2: #b6ff8a;
+  --card: rgba(14, 18, 14, 0.86);
+  --danger: #ff6b6b;
+  --discord: #5865f2;
+  --x: #f4f7f2;
+}
+
+* { box-sizing: border-box; }
+
+.shell {
   min-height: 100vh;
-  padding: 20px;
+  text-align: left;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 480px at 8% -10%, rgba(83, 252, 24, 0.16), transparent 60%),
+    radial-gradient(700px 420px at 100% 0%, rgba(88, 101, 242, 0.12), transparent 55%),
+    var(--bg);
   position: relative;
-  overflow: hidden;
 }
 
-.App::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(83, 252, 24, 0.1) 0%, transparent 70%);
-  z-index: 0;
+.shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, #000, transparent 80%);
 }
 
-.login-container {
-  background: #2D2D2D;
-  padding: 2.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-  max-width: 400px;
-  margin: 0 auto;
-  border: 1px solid rgba(83, 252, 24, 0.3);
+.topbar, .page {
   position: relative;
   z-index: 1;
 }
 
-.login-container h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #53FC18;
-  margin-bottom: 1rem;
-}
-
-.login-container p {
-  font-size: 1rem;
-  color: #B0B0B0;
-  margin-bottom: 2rem;
-}
-
-.buttons {
+.topbar {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
 }
 
-.btn {
-  background: linear-gradient(90deg, #53FC18, #4ae014);
-  color: #1A1A1A;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+.mark {
+  color: var(--ink);
   text-decoration: none;
-  transition: transform 0.1s, box-shadow 0.3s;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  font-size: 0.92rem;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(83, 252, 24, 0.5);
+.mark span { color: var(--green); }
+
+.topbar nav {
+  display: flex;
+  gap: 8px;
 }
 
-footer {
-  margin-top: 2rem;
+.topbar a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+}
+
+.topbar nav a:hover,
+.topbar nav a.active {
+  color: #071007;
+  background: var(--green);
+}
+
+.page {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 64px;
+}
+
+.hero-login {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  align-items: center;
+  min-height: calc(100vh - 120px);
+}
+
+.kicker {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--green);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin: 0 0 12px;
+}
+
+.hero-login h1, .page-head h1, .dash-head h1 {
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.95;
+  margin: 0 0 16px;
+  letter-spacing: -0.04em;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 1.08rem;
+  max-width: 46ch;
+  margin: 0 0 22px;
+}
+
+.login-card, .panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+}
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+
+.btn, .ghost, .warn, button.primary {
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn, .primary {
+  background: var(--green);
+  color: #071007;
+}
+
+.btn.discord { background: var(--discord); color: white; }
+.btn.x { background: var(--x); color: #111; }
+.btn.kick { background: var(--green); color: #071007; }
+
+.ghost, .warn {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.warn { color: #ffb4b4; border-color: rgba(255,107,107,0.4); }
+
+.btn:hover, .primary:hover { filter: brightness(1.05); }
+
+input, select, textarea {
+  width: 100%;
+  background: #0c100c;
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 12px;
+  font: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid rgba(83, 252, 24, 0.45);
+  border-color: transparent;
+}
+
+.note { color: var(--green-2); }
+.err { color: var(--danger); }
+
+.dash-head, .page-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.sub { color: var(--muted); margin: 0; }
+
+.stats {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  padding: 18px;
+  border-radius: 20px;
+  background: #101510;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat.live {
+  background:
+    radial-gradient(400px 120px at 0% 0%, rgba(83,252,24,0.18), transparent 60%),
+    #101510;
+}
+
+.stat b {
+  display: block;
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+  margin-top: 6px;
+}
+
+.label {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: #666;
+  margin-right: 8px;
+  box-shadow: 0 0 0 0 rgba(83,252,24,0.6);
+}
+
+.dot.on {
+  background: var(--green);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 8px rgba(83,252,24,0); }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 14px;
+}
+
+.panel h2 { margin: 0 0 6px; font-size: 1.25rem; }
+.panel .help { color: var(--muted); margin: 0 0 14px; font-size: 0.92rem; }
+
+.field { margin-bottom: 12px; }
+.field label { display: block; margin-bottom: 6px; font-size: 0.92rem; }
+.token {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--green-2);
+  font-size: 0.78rem;
+}
+
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.row > * { flex: 1; }
+
+.trigger {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.trigger strong { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--green); }
+
+.banner {
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  background: rgba(83,252,24,0.1);
+  color: var(--green-2);
+}
+
+.banner.bad { background: rgba(255,107,107,0.12); color: #ffb4b4; }
+
+.logout {
+  color: var(--muted);
   font-size: 0.9rem;
 }
 
-footer a {
-  background: none;
-  color: #53FC18;
-  padding: 0;
-  font-weight: 400;
-}
-
-footer a:hover {
-  color: #4ae014;
-  transform: none;
-  box-shadow: none;
-}
-
-.dashboard {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.logout-btn {
-  background: linear-gradient(90deg, #EF4444, #DC2626);
-  color: #FFFFFF;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.3s;
-  margin-bottom: 1.25rem;
-}
-
-.logout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.5);
-}
-
-.stats,
-.commands,
-.chat-log {
-  background: #2D2D2D;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.25rem;
-  border: 1px solid rgba(83, 252, 24, 0.3);
-}
-
-.stats h2,
-.commands h2,
-.chat-log h2 {
-  color: #53FC18;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-
-input {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background: #1A1A1A;
-  color: #FFFFFF;
-  border: 1px solid #53FC18;
-  transition: border-color 0.3s;
-}
-
-input:focus {
-  outline: none;
-  border-color: #4ae014;
-}
-
-form button {
-  background: linear-gradient(90deg, #53FC18, #4ae014);
-  color: #1A1A1A;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.3s;
-}
-
-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(83, 252, 24, 0.5);
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  margin: 0.5rem 0;
-}
-
-@media (max-width: 480px) {
-  .App {
-    padding: 10px;
-  }
-
-  .login-container {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
-
-  .login-container h1 {
-    font-size: 1.5rem;
-  }
-
-  .login-container p {
-    font-size: 0.9rem;
-  }
-
-  .btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .dashboard {
-    max-width: 100%;
-  }
-
-  .logout-btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .stats,
-  .commands,
-  .chat-log {
-    padding: 0.75rem;
-  }
-
-  .stats h2,
-  .commands h2,
-  .chat-log h2 {
-    font-size: 1rem;
-  }
-
-  input,
-  form button {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
+@media (max-width: 860px) {
+  .hero-login, .layout, .stats { grid-template-columns: 1fr; }
+  .topbar { padding: 14px; }
 }

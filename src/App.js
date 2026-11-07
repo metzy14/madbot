@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Connections from './Connections';
 import { AUTH_ORIGIN, clearSession, http } from './api';
@@ -25,40 +25,41 @@ const Home = () => {
   }
 
   return (
-  <div className="login-container">
-    <h1>Welcome to MadBot</h1>
-    <p>
-      {failed
-        ? 'Sign-in stopped at Discord. Paste the Client Secret (not the bot token) below, click Save secret, then Login with Discord.'
-        : 'Sign in to access your dashboard.'}
-    </p>
-    {failed ? (
-      <div className="buttons">
-        <input
-          type="password"
-          value={secret}
-          placeholder="Discord client secret"
-          onChange={(event) => setSecret(event.target.value)}
-        />
-        <button type="button" className="btn" onClick={saveSecret}>
-          Save secret
-        </button>
+    <section className="hero-login">
+      <div>
+        <p className="kicker">Kick · Discord · X</p>
+        <h1>Your stream, posted the moment you go live.</h1>
+        <p className="lede">
+          MadBot watches Kick, then drops the go-live post in Discord and on X, shouts out raids, and answers chat commands.
+        </p>
       </div>
-    ) : null}
-    {note ? <p>{note}</p> : null}
-    {error ? <p>{error}</p> : null}
-    <div className="buttons">
-      <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
-        Login with Discord
-      </a>
-      <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn">
-        Login with X
-      </a>
-      <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn">
-        Login with Kick
-      </a>
-    </div>
-  </div>
+      <div className="login-card">
+        <p className="kicker">Sign in</p>
+        <p className="lede" style={{ marginBottom: 16 }}>
+          {failed
+            ? 'Sign-in stopped at Discord. Paste the Client Secret (not the bot token), save it, then try Discord again.'
+            : 'Use the account that should own this bot.'}
+        </p>
+        {failed ? (
+          <div className="stack" style={{ marginBottom: 12 }}>
+            <input
+              type="password"
+              value={secret}
+              placeholder="Discord client secret"
+              onChange={(event) => setSecret(event.target.value)}
+            />
+            <button type="button" className="primary" onClick={saveSecret}>Save secret</button>
+          </div>
+        ) : null}
+        {note ? <p className="note">{note}</p> : null}
+        {error ? <p className="err">{error}</p> : null}
+        <div className="stack">
+          <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn discord">Login with Discord</a>
+          <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn x">Login with X</a>
+          <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn kick">Login with Kick</a>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -76,8 +77,7 @@ const DashboardGate = () => {
         setIsAuthenticated(response.data.isAuthenticated);
         setUser(response.data.user || null);
       })
-      .catch((error) => {
-        console.error('Error checking auth status:', error);
+      .catch(() => {
         if (!cancelled) setIsAuthenticated(false);
       })
       .finally(() => {
@@ -88,43 +88,28 @@ const DashboardGate = () => {
     };
   }, []);
 
-  if (loading) {
-    return <div className="login-container">Loading...</div>;
-  }
+  if (loading) return <p className="sub">Loading the control room…</p>;
 
   if (!isAuthenticated) {
     return (
-      <div className="login-container">
-        <h1>Please Sign In</h1>
-        <div className="buttons">
-          <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
-            Login with Discord
-          </a>
-          <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn">
-            Login with X
-          </a>
-          <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn">
-            Login with Kick
-          </a>
+      <div className="login-card" style={{ maxWidth: 460 }}>
+        <p className="kicker">Sign in required</p>
+        <h2>The dashboard is locked until you sign in.</h2>
+        <div className="stack">
+          <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn discord">Login with Discord</a>
+          <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn x">Login with X</a>
+          <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn kick">Login with Kick</a>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="dashboard">
-      <h1>Welcome, {user?.username}</h1>
-      <p>
-        <a
-          href={`${AUTH_ORIGIN}/logout`}
-          onClick={() => {
-            clearSession();
-          }}
-        >
-          Log out
-        </a>
+    <div>
+      <p className="sub" style={{ textAlign: 'right' }}>
+        <a className="logout" href={`${AUTH_ORIGIN}/logout`} onClick={() => clearSession()}>Log out</a>
       </p>
-      <Dashboard />
+      <Dashboard user={user} />
     </div>
   );
 };
@@ -132,19 +117,21 @@ const DashboardGate = () => {
 function App() {
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <Link to="/">Home</Link>
-          {' · '}
-          <Link to="/dashboard">Dashboard</Link>
-          {' · '}
-          <Link to="/connections">Connections</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<DashboardGate />} />
-          <Route path="/connections" element={<Connections />} />
-        </Routes>
+      <div className="shell">
+        <header className="topbar">
+          <Link to="/" className="mark">MAD<span>BOT</span></Link>
+          <nav>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/connections">Connections</NavLink>
+          </nav>
+        </header>
+        <main className="page">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<DashboardGate />} />
+            <Route path="/connections" element={<Connections />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
