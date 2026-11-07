@@ -6,11 +6,47 @@ import { AUTH_ORIGIN, clearSession, http } from './api';
 import './App.css';
 
 const Home = () => {
-  const failed = new URLSearchParams(window.location.search).get('login') === 'failed';
+  const params = new URLSearchParams(window.location.search);
+  const failed = params.get('login') === 'failed';
+  const [secret, setSecret] = useState('');
+  const [note, setNote] = useState('');
+  const [error, setError] = useState('');
+
+  async function saveSecret() {
+    setNote('');
+    setError('');
+    try {
+      await http.post('/setup/discord-secret', { secret });
+      setSecret('');
+      setNote('Saved. Click Login with Discord again.');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Could not save that secret.');
+    }
+  }
+
   return (
   <div className="login-container">
     <h1>Welcome to MadBot</h1>
-    <p>{failed ? 'Discord sign-in did not finish. Click Login with Discord again.' : 'Sign in to access your dashboard.'}</p>
+    <p>
+      {failed
+        ? 'Sign-in stopped at Discord. Paste the Client Secret (not the bot token) below, click Save secret, then Login with Discord.'
+        : 'Sign in to access your dashboard.'}
+    </p>
+    {failed ? (
+      <div className="buttons">
+        <input
+          type="password"
+          value={secret}
+          placeholder="Discord client secret"
+          onChange={(event) => setSecret(event.target.value)}
+        />
+        <button type="button" className="btn" onClick={saveSecret}>
+          Save secret
+        </button>
+      </div>
+    ) : null}
+    {note ? <p>{note}</p> : null}
+    {error ? <p>{error}</p> : null}
     <div className="buttons">
       <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
         Login with Discord
