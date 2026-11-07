@@ -43,7 +43,7 @@ const Dashboard = () => {
   const fetchMessages = async () => {
     try {
       const response = await http.get('/messages');
-      if (response.data) setMessages(response.data);
+      if (response.data) setMessages((current) => ({ ...current, ...response.data }));
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -64,7 +64,8 @@ const Dashboard = () => {
       alert('Messages saved successfully!');
       setEditingMessages(false);
     } catch (error) {
-      alert('Failed to save messages: ' + error.response.data.error);
+      const detail = error.response?.data?.error || error.message || 'unknown error';
+      alert('Failed to save messages: ' + detail);
     }
   };
 
@@ -76,7 +77,8 @@ const Dashboard = () => {
       setEditingTriggers(false);
       fetchTriggers(); // Refresh triggers
     } catch (error) {
-      alert('Failed to add trigger: ' + error.response.data.error);
+      const detail = error.response?.data?.error || error.message || 'unknown error';
+      alert('Failed to add trigger: ' + detail);
     }
   };
 

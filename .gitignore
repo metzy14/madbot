@@ -1,4 +1,7 @@
-madbot.db 
 node_modules/
+build/
 .vercel
-/build
+.env
+.env.local
+madbot.db
+coverage/
