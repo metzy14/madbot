@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import Alerts from './Alerts';
+import Commands from './Commands';
+import Planner from './Planner';
+import Raids from './Raids';
+import Pricing from './Pricing';
 import Connections from './Connections';
 import { AUTH_ORIGIN, clearSession, http } from './api';
 import './App.css';
@@ -30,7 +35,7 @@ const Home = () => {
         <p className="kicker">Kick · Discord · X</p>
         <h1>Your stream, posted the moment you go live.</h1>
         <p className="lede">
-          MadBot watches Kick, then drops the go-live post in Discord and on X, shouts out raids, and answers chat commands.
+          MadBot is the operating desk for a Kick channel. It posts go-live and raid alerts, runs chat commands, and keeps the show plan in one place.
         </p>
       </div>
       <div className="login-card">
@@ -121,15 +126,25 @@ function App() {
         <header className="topbar">
           <Link to="/" className="mark">MAD<span>BOT</span></Link>
           <nav>
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/dashboard">Desk</NavLink>
+            <NavLink to="/alerts">Alerts</NavLink>
+            <NavLink to="/commands">Commands</NavLink>
+            <NavLink to="/planner">Plan</NavLink>
+            <NavLink to="/raids">Raids</NavLink>
             <NavLink to="/connections">Connections</NavLink>
+            <NavLink to="/pricing">Pro</NavLink>
           </nav>
         </header>
         <main className="page">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<DashboardGate />} />
+            <Route path="/alerts" element={<Alerts />} />
+            <Route path="/commands" element={<Commands />} />
+            <Route path="/planner" element={<Planner />} />
+            <Route path="/raids" element={<Raids />} />
             <Route path="/connections" element={<Connections />} />
+            <Route path="/pricing" element={<Pricing />} />
           </Routes>
         </main>
       </div>
