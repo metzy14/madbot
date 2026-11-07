@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { http } from './api';
 
 const BUILTINS = [
-  ['!so name', 'Shout out a Kick channel. If they are in your raid book, your note is added.'],
-  ['!discord', 'Posts the Discord invite you saved on Raids.'],
-  ['!schedule', 'Reads the first line of your weekly board.'],
-  ['!clips', 'Drops your latest saved clip.'],
-  ['!goal', 'Says the follower goal and your call to action.'],
+  ['!points', 'Shows your points. !points name checks someone else.'],
+  ['!watchtime', 'Active minutes in chat.'],
+  ['!top', 'Top three by points.'],
+  ['!sr song', 'Add a song. !song, !queue, and !skip run the queue.'],
+  ['!enter', 'Join the open giveaway. The channel owner can !draw.'],
+  ['!buy item', 'Spend points in the shop.'],
+  ['!clip note', 'Mark a highlight and write the caption.'],
+  ['!uptime', 'How long this stream clock has been running.'],
+  ['!so name', 'Shout out a Kick channel.'],
+  ['!commands', 'List what chat can type.'],
 ];
 
 export default function Commands() {

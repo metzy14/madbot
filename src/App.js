@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-rou
 import Dashboard from './Dashboard';
 import Alerts from './Alerts';
 import Commands from './Commands';
+import Moderation from './Moderation';
+import Rewards from './Rewards';
+import Highlights from './Highlights';
 import Planner from './Planner';
 import Raids from './Raids';
 import Pricing from './Pricing';
@@ -129,6 +132,9 @@ function App() {
             <NavLink to="/dashboard">Desk</NavLink>
             <NavLink to="/alerts">Alerts</NavLink>
             <NavLink to="/commands">Commands</NavLink>
+            <NavLink to="/moderation">Mod</NavLink>
+            <NavLink to="/rewards">Rewards</NavLink>
+            <NavLink to="/highlights">Clips</NavLink>
             <NavLink to="/planner">Plan</NavLink>
             <NavLink to="/raids">Raids</NavLink>
             <NavLink to="/connections">Connections</NavLink>
@@ -141,6 +147,9 @@ function App() {
             <Route path="/dashboard" element={<DashboardGate />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/commands" element={<Commands />} />
+            <Route path="/moderation" element={<Moderation />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/highlights" element={<Highlights />} />
             <Route path="/planner" element={<Planner />} />
             <Route path="/raids" element={<Raids />} />
             <Route path="/connections" element={<Connections />} />

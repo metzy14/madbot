@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FREE = ['Go-live post to Discord', '3 custom chat commands', 'Connections for Kick, Discord, and X'];
-const PRO = ['Raid book and !so', 'Run of show clock', 'Weekly schedule and !schedule', 'Follower and viewer goals', 'Clip shelf and !clips', 'Blocked phrases', 'Timers', 'X cross-post and test alerts', 'Milestone and raid copy'];
+const PRO = [
+  'Moderation filters and chat timers',
+  'Points, shop, giveaways, and song requests',
+  'Highlight desk with caption packs',
+  'Raid book and !so',
+  'Run of show clock and weekly board',
+  'X cross-post and test alerts',
+];
 
 export default function Pricing() {
   return (
