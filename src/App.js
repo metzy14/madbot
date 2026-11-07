@@ -5,10 +5,12 @@ import Connections from './Connections';
 import { AUTH_ORIGIN, http } from './api';
 import './App.css';
 
-const Home = () => (
+const Home = () => {
+  const failed = new URLSearchParams(window.location.search).get('login') === 'failed';
+  return (
   <div className="login-container">
     <h1>Welcome to MadBot</h1>
-    <p>Sign in to access your dashboard.</p>
+    <p>{failed ? 'Discord sign-in did not finish. Click Login with Discord again.' : 'Sign in to access your dashboard.'}</p>
     <div className="buttons">
       <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
         Login with Discord
@@ -21,7 +23,8 @@ const Home = () => (
       </a>
     </div>
   </div>
-);
+  );
+};
 
 const DashboardGate = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
