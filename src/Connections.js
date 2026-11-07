@@ -100,7 +100,12 @@ const Connections = () => {
       });
       setNote(response.data.note || `${group.title} saved.`);
     } catch (err) {
-      setError(err.response?.data?.error || 'Save failed.');
+      const status = err.response?.status;
+      const message = err.response?.data?.error;
+      if (status === 401) setError('Sign in with Discord first, then save.');
+      else if (message) setError(message);
+      else if (!err.response) setError('MadBot did not answer. Use the website, not the program on your PC.');
+      else setError('Save failed. Sign in with Discord, then try again.');
     } finally {
       setBusy('');
     }
