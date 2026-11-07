@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { http } from './api';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -9,7 +9,6 @@ const Dashboard = () => {
     viewers: null,
     title: null,
   });
-  const [apiKey, setApiKey] = useState('');
   const [messages, setMessages] = useState({
     streamStartMessage: '',
     followerMilestoneMessage: '',
@@ -30,11 +29,11 @@ const Dashboard = () => {
     fetchStats();
     fetchMessages();
     fetchTriggers();
-  }, [apiKey]);
+  }, []);
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`https://madbot-backend.onrender.com/stats?apiKey=${apiKey}`);
+      const response = await http.get('/stats');
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -42,20 +41,18 @@ const Dashboard = () => {
   };
 
   const fetchMessages = async () => {
-    if (!apiKey || apiKey !== 'premium_key') return;
     try {
-      const response = await axios.get(`https://madbot-backend.onrender.com/messages?apiKey=${apiKey}`);
-      setMessages(response.data);
+      const response = await http.get('/messages');
+      if (response.data) setMessages(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   };
 
   const fetchTriggers = async () => {
-    if (!apiKey || apiKey !== 'premium_key') return;
     try {
-      const response = await axios.get(`https://madbot-backend.onrender.com/triggers?apiKey=${apiKey}`);
-      setTriggers(response.data);
+      const response = await http.get('/triggers');
+      setTriggers(response.data || []);
     } catch (error) {
       console.error('Error fetching triggers:', error);
     }
@@ -63,7 +60,7 @@ const Dashboard = () => {
 
   const saveMessages = async () => {
     try {
-      await axios.post(`https://madbot-backend.onrender.com/messages?apiKey=${apiKey}`, messages);
+      await http.post('/messages', messages);
       alert('Messages saved successfully!');
       setEditingMessages(false);
     } catch (error) {
@@ -73,7 +70,7 @@ const Dashboard = () => {
 
   const addTrigger = async () => {
     try {
-      await axios.post(`https://madbot-backend.onrender.com/triggers?apiKey=${apiKey}`, newTrigger);
+      await http.post('/triggers', newTrigger);
       alert('Trigger added successfully!');
       setNewTrigger({ type: 'chat', condition: '', message: '' });
       setEditingTriggers(false);
@@ -87,18 +84,6 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">MadBot Dashboard</h1>
-
-        {/* API Key Input */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">API Key</label>
-          <input
-            type="text"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="Enter your API key"
-            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-green-500"
-          />
-        </div>
 
         {/* Live Stats */}
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg mb-6">

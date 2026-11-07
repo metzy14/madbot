@@ -1,3 +1,4 @@
 madbot.db 
 node_modules/
 .vercel
+/build

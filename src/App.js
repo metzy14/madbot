@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import axios from 'axios';
+import Dashboard from './Dashboard';
+import { API, http } from './api';
 import './App.css';
 
 const Home = () => (
@@ -8,41 +9,43 @@ const Home = () => (
     <h1>Welcome to MadBot</h1>
     <p>Sign in to access your dashboard.</p>
     <div className="buttons">
-      <a href="https://madbot-backend.onrender.com/auth/discord" className="btn">
+      <a href={`${API}/auth/discord`} className="btn">
         Login with Discord
       </a>
-      <a href="https://madbot-backend.onrender.com/auth/twitter" className="btn">
+      <a href={`${API}/auth/twitter`} className="btn">
         Login with X
       </a>
-      <a href="https://madbot-backend.onrender.com/auth/kick" className="btn">
+      <a href={`${API}/auth/kick`} className="btn">
         Login with Kick
       </a>
     </div>
   </div>
 );
 
-const Dashboard = () => {
+const DashboardGate = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await axios.get('https://madbot-backend.onrender.com/auth/status', {
-          withCredentials: true,
-        });
+    let cancelled = false;
+    http
+      .get('/auth/status')
+      .then((response) => {
+        if (cancelled) return;
         setIsAuthenticated(response.data.isAuthenticated);
         setUser(response.data.user || null);
-        setLoading(false);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error('Error checking auth status:', error);
-        setIsAuthenticated(false);
-        setLoading(false);
-      }
+        if (!cancelled) setIsAuthenticated(false);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
     };
-
-    checkAuthStatus();
   }, []);
 
   if (loading) {
@@ -54,13 +57,13 @@ const Dashboard = () => {
       <div className="login-container">
         <h1>Please Sign In</h1>
         <div className="buttons">
-          <a href="https://madbot-backend.onrender.com/auth/discord" className="btn">
+          <a href={`${API}/auth/discord`} className="btn">
             Login with Discord
           </a>
-          <a href="https://madbot-backend.onrender.com/auth/twitter" className="btn">
+          <a href={`${API}/auth/twitter`} className="btn">
             Login with X
           </a>
-          <a href="https://madbot-backend.onrender.com/auth/kick" className="btn">
+          <a href={`${API}/auth/kick`} className="btn">
             Login with Kick
           </a>
         </div>
@@ -70,12 +73,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Welcome to MadBot Dashboard, {user?.username}!</h1>
-      <p>Here you can manage your bot settings, view stats, and more.</p>
-      <a href="https://madbot-backend.onrender.com/logout">
-        <button className="logout-btn">Logout</button>
-      </a>
-      {/* Add dashboard functionality here (e.g., stats, messages, triggers) */}
+      <h1>Welcome, {user?.username}</h1>
+      <p>
+        <a href={`${API}/logout`}>Log out</a>
+      </p>
+      <Dashboard />
     </div>
   );
 };
@@ -89,13 +91,8 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<DashboardGate />} />
         </Routes>
-        <footer>
-          <a href="https://github.com/metzy14/madbot-backend" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-        </footer>
       </div>
     </Router>
   );
