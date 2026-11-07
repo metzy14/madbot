@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Connections from './Connections';
-import { API, http } from './api';
+import { AUTH_ORIGIN, http } from './api';
 import './App.css';
 
 const Home = () => (
@@ -10,13 +10,13 @@ const Home = () => (
     <h1>Welcome to MadBot</h1>
     <p>Sign in to access your dashboard.</p>
     <div className="buttons">
-      <a href={`${API}/auth/discord`} className="btn">
+      <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
         Login with Discord
       </a>
-      <a href={`${API}/auth/twitter`} className="btn">
+      <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn">
         Login with X
       </a>
-      <a href={`${API}/auth/kick`} className="btn">
+      <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn">
         Login with Kick
       </a>
     </div>
@@ -58,13 +58,13 @@ const DashboardGate = () => {
       <div className="login-container">
         <h1>Please Sign In</h1>
         <div className="buttons">
-          <a href={`${API}/auth/discord`} className="btn">
+          <a href={`${AUTH_ORIGIN}/auth/discord`} className="btn">
             Login with Discord
           </a>
-          <a href={`${API}/auth/twitter`} className="btn">
+          <a href={`${AUTH_ORIGIN}/auth/twitter`} className="btn">
             Login with X
           </a>
-          <a href={`${API}/auth/kick`} className="btn">
+          <a href={`${AUTH_ORIGIN}/auth/kick`} className="btn">
             Login with Kick
           </a>
         </div>
@@ -76,7 +76,7 @@ const DashboardGate = () => {
     <div className="dashboard">
       <h1>Welcome, {user?.username}</h1>
       <p>
-        <a href={`${API}/logout`}>Log out</a>
+        <a href={`${AUTH_ORIGIN}/logout`}>Log out</a>
       </p>
       <Dashboard />
     </div>

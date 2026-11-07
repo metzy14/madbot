@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API, http } from './api';
+import { AUTH_ORIGIN, http } from './api';
 import './connections.css';
 
 const GROUPS = [
@@ -157,9 +157,9 @@ const Connections = () => {
           <h1>Connections</h1>
           <p className="panel-copy">Sign in, then paste your Discord, X, and Kick keys here.</p>
           <div className="signin-links">
-            <a href={`${API}/auth/discord`}>Sign in with Discord</a>
-            <a href={`${API}/auth/twitter`}>Sign in with X</a>
-            <a href={`${API}/auth/kick`}>Sign in with Kick</a>
+            <a href={`${AUTH_ORIGIN}/auth/discord`}>Sign in with Discord</a>
+            <a href={`${AUTH_ORIGIN}/auth/twitter`}>Sign in with X</a>
+            <a href={`${AUTH_ORIGIN}/auth/kick`}>Sign in with Kick</a>
           </div>
         </div>
       </section>

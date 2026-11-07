@@ -1,13 +1,20 @@
 import axios from 'axios';
 
-// Dev uses the CRA proxy (package.json "proxy") so the session cookie is same-site.
-// Production calls the deployed API unless REACT_APP_API_URL overrides it.
+// API calls in dev go through the CRA proxy so the session cookie stays on localhost.
+// Login and logout are full-page navigations. CRA does not proxy those, so they
+// must hit the API port directly.
 export const API =
   process.env.NODE_ENV === 'development'
     ? ''
     : process.env.REACT_APP_API_URL || 'https://madbot-backend.onrender.com';
 
+export const AUTH_ORIGIN =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:10000'
+    : API;
+
 export const http = axios.create({
   baseURL: API,
   withCredentials: true,
 });
+
