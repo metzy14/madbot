@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import Connections from './Connections';
 import { API, http } from './api';
 import './App.css';
 
@@ -87,11 +88,16 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Link to="/">Home</Link> | <Link to="/dashboard">Dashboard</Link>
+          <Link to="/">Home</Link>
+          {' · '}
+          <Link to="/dashboard">Dashboard</Link>
+          {' · '}
+          <Link to="/connections">Connections</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<DashboardGate />} />
+          <Route path="/connections" element={<Connections />} />
         </Routes>
       </div>
     </Router>
