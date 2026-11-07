@@ -5,7 +5,7 @@ const FREE = ['Go-live post to Discord', '3 custom chat commands', 'Connections 
 const PRO = [
   'Moderation filters and chat timers',
   'Points, shop, giveaways, and song requests',
-  'Highlight desk with caption packs',
+  'Highlight desk and Vod2Content packs',
   'Raid book and !so',
   'Run of show clock and weekly board',
   'X cross-post and test alerts',

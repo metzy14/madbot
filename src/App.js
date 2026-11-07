@@ -6,6 +6,7 @@ import Commands from './Commands';
 import Moderation from './Moderation';
 import Rewards from './Rewards';
 import Highlights from './Highlights';
+import Vod2Content from './Vod2Content';
 import Planner from './Planner';
 import Raids from './Raids';
 import Pricing from './Pricing';
@@ -135,6 +136,7 @@ function App() {
             <NavLink to="/moderation">Mod</NavLink>
             <NavLink to="/rewards">Rewards</NavLink>
             <NavLink to="/highlights">Clips</NavLink>
+            <NavLink to="/vod">VOD</NavLink>
             <NavLink to="/planner">Plan</NavLink>
             <NavLink to="/raids">Raids</NavLink>
             <NavLink to="/connections">Connections</NavLink>
@@ -150,6 +152,7 @@ function App() {
             <Route path="/moderation" element={<Moderation />} />
             <Route path="/rewards" element={<Rewards />} />
             <Route path="/highlights" element={<Highlights />} />
+            <Route path="/vod" element={<Vod2Content />} />
             <Route path="/planner" element={<Planner />} />
             <Route path="/raids" element={<Raids />} />
             <Route path="/connections" element={<Connections />} />
