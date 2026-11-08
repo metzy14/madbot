@@ -1,0 +1,10 @@
+[server]
+maxUploadSize = 8192
+maxMessageSize = 8192
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+fastReruns = true
