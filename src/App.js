@@ -11,6 +11,7 @@ import Planner from './Planner';
 import Raids from './Raids';
 import Pricing from './Pricing';
 import Connections from './Connections';
+import Room from './Room';
 import { AUTH_ORIGIN, clearSession, http } from './api';
 import './App.css';
 
@@ -128,7 +129,10 @@ function App() {
     <Router>
       <div className="shell">
         <header className="topbar">
-          <Link to="/" className="mark">MAD<span>BOT</span></Link>
+          <Link to="/" className="mark brand">
+            <img src="/mark.png" alt="" />
+            MAD<span>BOT</span>
+          </Link>
           <nav>
             <NavLink to="/dashboard">Desk</NavLink>
             <NavLink to="/alerts">Alerts</NavLink>
@@ -136,6 +140,10 @@ function App() {
             <NavLink to="/moderation">Mod</NavLink>
             <NavLink to="/rewards">Rewards</NavLink>
             <NavLink to="/highlights">Clips</NavLink>
+            <NavLink to="/live">Live</NavLink>
+            <NavLink to="/lights">Lights</NavLink>
+            <NavLink to="/voice">Voice</NavLink>
+            <NavLink to="/overlays">Overlays</NavLink>
             <NavLink to="/vod">VOD</NavLink>
             <NavLink to="/planner">Plan</NavLink>
             <NavLink to="/raids">Raids</NavLink>
@@ -152,6 +160,10 @@ function App() {
             <Route path="/moderation" element={<Moderation />} />
             <Route path="/rewards" element={<Rewards />} />
             <Route path="/highlights" element={<Highlights />} />
+            <Route path="/live" element={<Room view="live" />} />
+            <Route path="/lights" element={<Room view="lights" />} />
+            <Route path="/voice" element={<Room view="voice" />} />
+            <Route path="/overlays" element={<Room view="overlays" />} />
             <Route path="/vod" element={<Vod2Content />} />
             <Route path="/planner" element={<Planner />} />
             <Route path="/raids" element={<Raids />} />

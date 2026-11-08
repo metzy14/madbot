@@ -1,23 +1,24 @@
 :root {
-  --bg: #070907;
-  --ink: #f4f7f2;
-  --muted: #9aa898;
-  --line: rgba(83, 252, 24, 0.22);
-  --green: #53fc18;
-  --green-2: #b6ff8a;
-  --card: rgba(14, 18, 14, 0.86);
+  --bg: #14110c;
+  --ink: #f4efe4;
+  --muted: #b7a78a;
+  --line: rgba(226, 182, 87, 0.28);
+  --green: #3d9eff;
+  --green-2: #e2b657;
+  --card: rgba(34, 28, 20, 0.92);
   --danger: #ff6b6b;
   --discord: #5865f2;
-  --x: #f4f7f2;
+  --x: #f4efe4;
 }
 * { box-sizing: border-box; }
 .shell {
   min-height: 100vh;
   text-align: left;
   color: var(--ink);
+  font-family: Outfit, system-ui, sans-serif;
   background:
-    radial-gradient(900px 480px at 8% -10%, rgba(83, 252, 24, 0.16), transparent 60%),
-    radial-gradient(700px 420px at 100% 0%, rgba(88, 101, 242, 0.12), transparent 55%),
+    radial-gradient(900px 480px at 8% -10%, rgba(226, 182, 87, 0.16), transparent 60%),
+    radial-gradient(700px 420px at 100% 0%, rgba(61, 158, 255, 0.14), transparent 55%),
     var(--bg);
   position: relative;
 }
@@ -158,3 +159,14 @@ input:focus, select:focus, textarea:focus { outline: 2px solid rgba(83, 252, 24,
   .hero-login, .layout, .stats, .price-grid { grid-template-columns: 1fr; }
   .topbar { padding: 14px; }
 }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
+.room-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; margin-top: 18px; }
+.preview-card { background: radial-gradient(120% 80% at 50% 120%, color-mix(in srgb, var(--glow, #3d9eff) 45%, transparent), #0c0a07); text-align: center; }
+.preview-card strong { display: block; font-size: 1.8rem; }
+.preview-card img { border-radius: 16px; }
+.stage-light { height: 140px; border-radius: 16px; border: 1px solid var(--line); }
+.swatch { width: 44px; height: 44px; border-radius: 999px; border: 2px solid #111; padding: 0; }
+.event-line { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding: 8px 0; color: var(--muted); }
+.lbl { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 12px; }
+@media (max-width: 800px) { .room-grid { grid-template-columns: 1fr; } }
